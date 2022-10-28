@@ -21,7 +21,7 @@ export default function Header() {
   const Icon = useColorModeValue(FaMoon, FaSun);
 
   return (
-    <HStack justifyContent={'space-between'} px={10} py={5} borderBottomWidth={1}>
+    <HStack justifyContent={'space-between'} px={40} py={5} borderBottomWidth={1}>
       <Box color={logoColor}>
         <Link to={'/'}>
           <FaAirbnb size={48} />
