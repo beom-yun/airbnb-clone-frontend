@@ -6,7 +6,7 @@ export default function Room() {
 
   return (
     <VStack alignItems={'flex-start'}>
-      <Box position="relative" overflow="hidden" mb={3} rounded={'2xl'}>
+      <Box h="280" position="relative" overflow="hidden" mb={3} rounded={'2xl'}>
         <Image
           minH="280"
           src="https://a0.muscache.com/im/pictures/10da01cc-17a4-4eef-99b8-a3eb9005fba8.jpg?aki_policy=large"
@@ -20,7 +20,7 @@ export default function Room() {
           <Text as="b" noOfLines={1} fontSize={'sm'}>
             애월읍, 제주시, 제주도, 한국
           </Text>
-          <HStack spacing={1}>
+          <HStack _hover={{ color: 'red.500' }} spacing={1} alignItems="center">
             <FaStar size={15} />
             <Text>5.0</Text>
           </HStack>
