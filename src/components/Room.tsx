@@ -29,9 +29,11 @@ export default function Room({
 }: IRoomProps) {
   const gray = useColorModeValue('gray.600', 'gray.300');
 
+  console.log(imageUrl, name, rating);
+
   return (
     <VStack alignItems={'flex-start'}>
-      <Box position="relative" overflow="hidden" mb={3} rounded={'2xl'}>
+      <Box h="280" position="relative" overflow="hidden" mb={3} rounded={'2xl'}>
         <Image minH="280" src={imageUrl} />
         <Button
           variant={'unstyled'}
