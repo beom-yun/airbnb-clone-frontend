@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   HStack,
@@ -11,12 +12,22 @@ import {
 } from '@chakra-ui/react';
 import { FaAirbnb, FaMoon, FaSun } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import useUser from '../lib/useUser';
 import LoginModal from './LoginModal';
 import SignUpModal from './SignUpModal';
 
 export default function Header() {
-  const { isOpen: isLoginOpen, onClose: onLoginClose, onOpen: onLoginOpen } = useDisclosure();
-  const { isOpen: isSignUpOpen, onClose: onSignUpClose, onOpen: onSignUpOpen } = useDisclosure();
+  const { userLoading, isLoggedIn, user } = useUser();
+  const {
+    isOpen: isLoginOpen,
+    onClose: onLoginClose,
+    onOpen: onLoginOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isSignUpOpen,
+    onClose: onSignUpClose,
+    onOpen: onSignUpOpen,
+  } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const logoColor = useColorModeValue('red.500', 'red.300');
   const Icon = useColorModeValue(FaMoon, FaSun);
@@ -43,13 +54,26 @@ export default function Header() {
         </Link>
       </Box>
       <HStack spacing={2}>
-        <IconButton onClick={toggleColorMode} variant={'ghost'} aria-label="Toggle dark mode" icon={<Icon />} />
-        <Button onClick={onLoginOpen}>Log in</Button>
-        <LightMode>
-          <Button onClick={onSignUpOpen} colorScheme={'red'}>
-            Sign up
-          </Button>
-        </LightMode>
+        <IconButton
+          onClick={toggleColorMode}
+          variant={'ghost'}
+          aria-label="Toggle dark mode"
+          icon={<Icon />}
+        />
+        {!userLoading ? (
+          !isLoggedIn ? (
+            <>
+              <Button onClick={onLoginOpen}>Log in</Button>
+              <LightMode>
+                <Button onClick={onSignUpOpen} colorScheme={'red'}>
+                  Sign up
+                </Button>
+              </LightMode>
+            </>
+          ) : (
+            <Avatar size={'md'} />
+          )
+        ) : null}
       </HStack>
       <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
       <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
