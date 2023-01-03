@@ -4,6 +4,7 @@ import {
   HStack,
   IconButton,
   LightMode,
+  Stack,
   useColorMode,
   useColorModeValue,
   useDisclosure,
@@ -14,14 +15,36 @@ import LoginModal from './LoginModal';
 import SignUpModal from './SignUpModal';
 
 export default function Header() {
-  const { isOpen: isLoginOpen, onClose: onLoginClose, onOpen: onLoginOpen } = useDisclosure();
-  const { isOpen: isSignUpOpen, onClose: onSignUpClose, onOpen: onSignUpOpen } = useDisclosure();
+  const {
+    isOpen: isLoginOpen,
+    onClose: onLoginClose,
+    onOpen: onLoginOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isSignUpOpen,
+    onClose: onSignUpClose,
+    onOpen: onSignUpOpen,
+  } = useDisclosure();
   const { toggleColorMode } = useColorMode();
   const logoColor = useColorModeValue('red.500', 'red.300');
   const Icon = useColorModeValue(FaMoon, FaSun);
 
   return (
-    <HStack py={5} px={40} borderBottomWidth={'1px'} justifyContent={'space-between'}>
+    <Stack
+      py={5}
+      px={40}
+      borderBottomWidth={'1px'}
+      justifyContent={'space-between'}
+      direction={{
+        sm: 'column',
+        md: 'row',
+      }}
+      alignItems={'center'}
+      spacing={{
+        sm: 4,
+        md: 0,
+      }}
+    >
       <Box color={logoColor}>
         <Link to={'/'}>
           <FaAirbnb size={48} />
@@ -29,7 +52,12 @@ export default function Header() {
       </Box>
 
       <HStack spacing={2}>
-        <IconButton onClick={toggleColorMode} aria-label="Toggle dark mode" icon={<Icon />} variant={'ghost'} />
+        <IconButton
+          onClick={toggleColorMode}
+          aria-label="Toggle dark mode"
+          icon={<Icon />}
+          variant={'ghost'}
+        />
         <Button onClick={onLoginOpen}>Log in</Button>
         <LightMode>
           <Button onClick={onSignUpOpen} colorScheme={'red'}>
@@ -39,6 +67,6 @@ export default function Header() {
       </HStack>
       <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
       <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
-    </HStack>
+    </Stack>
   );
 }
