@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Container,
   Grid,
   GridItem,
   Heading,
@@ -19,9 +20,10 @@ import { IReview, IRoomDetail } from '../types';
 export default function RoomDetail() {
   const { roomPk } = useParams();
   const { isLoading, data } = useQuery<IRoomDetail>(['rooms', roomPk], getRoom);
-  const { isLoading: isReviewsLoading, data: reviewsData } = useQuery<
-    IReview[]
-  >(['rooms', roomPk, 'reviews'], getRoomReviews);
+  const { isLoading: isReviewsLoading, data: reviewsData } = useQuery<IReview[]>(
+    ['rooms', roomPk, 'reviews'],
+    getRoomReviews
+  );
 
   return (
     <Box pb={40} mt={10} px={{ base: 10, lg: 40 }}>
@@ -38,19 +40,9 @@ export default function RoomDetail() {
         templateColumns={'repeat(4, 1fr)'}
       >
         {[0, 1, 2, 3, 4].map(index => (
-          <GridItem
-            colSpan={index === 0 ? 2 : 1}
-            rowSpan={index === 0 ? 2 : 1}
-            key={index}
-            overflow={'hidden'}
-          >
+          <GridItem colSpan={index === 0 ? 2 : 1} rowSpan={index === 0 ? 2 : 1} key={index} overflow={'hidden'}>
             <Skeleton isLoaded={!isLoading} h={'100%'} w={'100%'}>
-              <Image
-                w={'100%'}
-                h={'100%'}
-                objectFit={'cover'}
-                src={data?.photos[index].file}
-              />
+              <Image w={'100%'} h={'100%'} objectFit={'cover'} src={data?.photos[index].file} />
             </Skeleton>
           </GridItem>
         ))}
@@ -58,9 +50,7 @@ export default function RoomDetail() {
       <HStack w={'50%'} mt={10} justifyContent={'space-between'}>
         <VStack alignItems={'flex-start'}>
           <Skeleton isLoaded={!isLoading} h={'29px'}>
-            <Heading fontSize={'2xl'}>
-              House hosted by {data?.owner.name}
-            </Heading>
+            <Heading fontSize={'2xl'}>House hosted by {data?.owner.name}</Heading>
           </Skeleton>
           <Skeleton isLoaded={!isLoading} h={'24px'}>
             <HStack justifyContent={'flex-start'} w={'100%'}>
@@ -78,7 +68,7 @@ export default function RoomDetail() {
       </HStack>
 
       <Box mt={10}>
-        <Heading fontSize={'xl'}>
+        <Heading mb={5} fontSize={'xl'}>
           <HStack>
             <FaStar /> <Text>{data?.rating}</Text>
             <Text>∙</Text>
@@ -87,6 +77,25 @@ export default function RoomDetail() {
             </Text>
           </HStack>
         </Heading>
+        <Container mt={16} maxW={'container.lg'} marginX={'none'}>
+          <Grid gap={10} templateColumns={'1fr 1fr'}>
+            {reviewsData?.map((review, index) => (
+              <VStack alignItems={'flex-start'} key={index}>
+                <HStack>
+                  <Avatar name={review.user.name} src={review.user.avatar} size="md" />
+                  <VStack spacing={0} alignItems={'flex-start'}>
+                    <Heading fontSize={'md'}>{review.user.name}</Heading>
+                    <HStack spacing={1}>
+                      <FaStar size="12px" />
+                      <Text>{review.rating}</Text>
+                    </HStack>
+                  </VStack>
+                </HStack>
+                <Text>{review.payload}</Text>
+              </VStack>
+            ))}
+          </Grid>
+        </Container>
       </Box>
     </Box>
   );
