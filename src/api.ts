@@ -6,7 +6,8 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export const getRooms = () => instance.get('rooms/').then(response => response.data);
+export const getRooms = () =>
+  instance.get('rooms/').then(response => response.data);
 
 export const getRoom = ({ queryKey }: QueryFunctionContext) => {
   const [_, roomPk] = queryKey;
@@ -15,7 +16,13 @@ export const getRoom = ({ queryKey }: QueryFunctionContext) => {
 
 export const getRoomReviews = ({ queryKey }: QueryFunctionContext) => {
   const [_, roomPk] = queryKey;
-  return instance.get(`rooms/${roomPk}/reviews/`).then(response => response.data);
+  return instance
+    .get(`rooms/${roomPk}/reviews/`)
+    .then(response => response.data);
 };
 
-export const getMe = () => instance.get('users/me/').then(response => response.data);
+export const getMe = () =>
+  instance.get('users/me/').then(response => response.data);
+
+export const logOut = () =>
+  instance.post('users/log-out/').then(response => response.data);
