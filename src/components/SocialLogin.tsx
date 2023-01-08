@@ -6,14 +6,19 @@ export default function SocialLogin() {
     <Box mb={4}>
       <HStack my={8}>
         <Divider />
-        <Text fontSize={'xs'} as={'b'} textTransform={'uppercase'} color={'gray.500'}>
+        <Text
+          fontSize={'xs'}
+          as={'b'}
+          textTransform={'uppercase'}
+          color={'gray.500'}
+        >
           Or
         </Text>
         <Divider />
       </HStack>
 
       <VStack>
-        <Button w={'100%'} leftIcon={<FaGithub />} colorScheme={'telegram'}>
+        <Button w={'100%'} leftIcon={<FaGithub />}>
           Continue with Github
         </Button>
         <Button w={'100%'} leftIcon={<FaComment />} colorScheme={'yellow'}>
